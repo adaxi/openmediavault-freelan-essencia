@@ -25,9 +25,12 @@ set -e
 . /etc/default/openmediavault
 . /usr/share/openmediavault/scripts/helper-functions
 
+OMV_FREELAN_CONFIG_DIR=${OMV_FREELAN_CONFIG_DIR:-"/etc/freelan"}
 OMV_FREELAN_FREELAN_CONFIG=${OMV_FREELAN_FREELAN_CONFIG:-"/etc/freelan/freelan.conf"}
 OMV_FREELAN_FREELAN_CONFIG_ALIAS=${OMV_FREELAN_FREELAN_CONFIG_ALIAS:-"/etc/freelan/freelan.cfg"}
 OMV_FREELAN_FREELAN_DEFAULT=${OMV_FREELAN_FREELAN_DEFAULT:-"/etc/default/freelan"}
+
+mkdir -p ${OMV_FREELAN_CONFIG_DIR}
 
 xmlstarlet sel -t -m "//services/freelan" \
   -o "[server]" -n \
