@@ -80,7 +80,7 @@ xmlstarlet sel -t \
   -o "#" -n \
   -o "# CONFIGURATIONS=" -n \
   -m "//services/freelan[enable='1']" \
-    -o "CONFIGURATIONS=freelan > /dev/null 2>&1" -n \
+    -o "CONFIGURATIONS=freelan" -n \
   -b \
   -n \
   -o "# Additional options that are passed to the Daemon." -n \
