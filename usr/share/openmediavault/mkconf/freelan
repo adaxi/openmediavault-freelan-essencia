@@ -85,8 +85,7 @@ xmlstarlet sel -t \
   -n \
   -o "# Additional options that are passed to the Daemon." -n \
   -o "#" -n \
-  -o "#DAEMON_OPTS=\"\"" -n \  
-${OMV_CONFIG_FILE} | xmlstarlet unesc > ${OMV_FREELAN_FREELAN_DEFAULT}
+  -o "#DAEMON_OPTS=\"\"" -n ${OMV_CONFIG_FILE} | xmlstarlet unesc > ${OMV_FREELAN_FREELAN_DEFAULT}
 chmod 644 ${OMV_FREELAN_FREELAN_DEFAULT}
 
 
