@@ -1,0 +1,69 @@
+#!/bin/sh
+#
+# @license   http://www.gnu.org/licenses/gpl.html GPL Version 2
+# @author    Gerik Bonaert <dev@adaxisoft.be>
+# @copyright Copyright (c) 2013 Gerik Bonaert
+#
+# Freelan for OpenMediaVault is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# any later version.
+#
+# OpenMediaVault is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with OpenMediaVault. If not, see <http://www.gnu.org/licenses/>.
+
+set -e
+
+. /etc/default/openmediavault
+. /usr/share/openmediavault/scripts/helper-functions
+
+case "$1" in
+	configure)
+		########################################################################
+		# Set the default settings of the freelan package to those expected by
+		# OpenMediaVault.
+		########################################################################
+
+		########################################################################
+		# Update the configuration.
+		# <config>
+		#   <services>
+		#     <freelan>
+		#       <enable>0</enable>
+		#       <server>www.ovh.com</server>
+		#       <network>haecht.adaxisoft.be</network>
+		#       <username></username>
+		#       <password></password>
+		#       <endpoint></endpoint>
+		#     </freelan>
+		#   </services>
+		# </config>
+		########################################################################
+		if ! omv_config_exists "/config/services/freelan"; then
+			echo "Initialize configuration"
+			object="<enable>0</enable>"
+			object="${object}<server></server>"
+			object="${object}<network></network>"
+			object="${object}<username></username>"
+			object="${object}<password></password>"
+			object="${object}<endpoint></endpoint>"
+			omv_config_add_element "/config/services" "freelan" "${object}" true
+		fi
+
+	;;
+
+	abort-upgrade|abort-remove|abort-deconfigure)
+	;;
+
+	*)
+		echo "postinst called with unknown argument '$1'" >&2
+		exit 1
+	;;
+esac
+
+exit 0

@@ -1,0 +1,14 @@
+Source: openmediavault-freelan
+Section: net
+Priority: optional
+Maintainer: Gerik Bonaert <dev@adaxisoft.be>
+Build-Depends: debhelper (>> 7), gettext
+Standards-Version: 3.6.10
+Homepage: http://adaxisoft.be
+
+Package: openmediavault-freelan
+Architecture: all
+Depends: openmediavault (>= 0.5.7)
+Priority: optional
+Description: OpenMediaVault Freelan plugin
+ Freelan is a VPN software that abstracts a LAN over the Internet.

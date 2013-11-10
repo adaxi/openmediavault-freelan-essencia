@@ -1,0 +1,90 @@
+#!/bin/sh
+#
+# @license   http://www.gnu.org/licenses/gpl.html GPL Version 2
+# @author    Gerik Bonaert <dev@adaxisoft.be>
+# @copyright Copyright (c) 2013 Gerik Bonaert
+#
+# Freelan for OpenMediaVault is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# any later version.
+#
+# OpenMediaVault is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with OpenMediaVault. If not, see <http://www.gnu.org/licenses/>.
+
+# Documentation/Howto:
+# http://wiki.dreamhost.com/index.php/Crontab
+
+set -e
+
+. /etc/default/openmediavault
+. /usr/share/openmediavault/scripts/helper-functions
+
+OMV_FREELAN_FREELAN_CONFIG=${OMV_FREELAN_FREELAN_CONFIG:-"/etc/freelan/freelan.conf"}
+OMV_FREELAN_FREELAN_CONFIG_ALIAS=${OMV_FREELAN_FREELAN_CONFIG_ALIAS:-"/etc/freelan/freelan.cfg"}
+OMV_FREELAN_FREELAN_DEFAULT=${OMV_FREELAN_FREELAN_DEFAULT:-"/etc/default/freelan"}
+
+xmlstarlet sel -t -m "//services/freelan" \
+  -o "[server]" -n \
+  -o "enabled = yes" -n \
+  -v "concat('host = ', server)" -n \
+  -v "concat('username = \"', username, '\"')" -n \
+  -v "concat('password = \"', password, '\"')" -n \
+  -v "concat('network = \"', network, '\"')" -n \
+  -v "concat('public_endpoint = \"', endpoint, '\"')" -n \
+  -o "protocol = https" -n \
+  -o "disable_peer_verification = no" -n \
+  -o "disable_host_verification = no" -n \
+  -n \
+  -o "[fscp]" -n \
+  -o "hostname_resolution_protocol = ipv4" -n \
+  -o "listen_on = 0.0.0.0:12000" -n \
+  -o "hello_timeout = 3000" -n \
+  -o "accept_contact_requests = yes" -n \
+  -o "accept_contacts = yes" -n \
+  -o "cipher_capability = aes256-gcm" -n \
+  -n \
+  -o "[tap_adapter]" -n \
+  -o "enabled = yes" -n \
+  -o "ipv4_address_prefix_length = 9.0.0.1/24" -n \
+  -o "ipv6_address_prefix_length = 2aa1::1/8" -n \
+  -o "arp_proxy_enabled = no" -n \
+  -o "arp_proxy_fake_ethernet_address = 00:aa:bb:cc:dd:ee" -n \
+  -o "dhcp_proxy_enabled = yes" -n \
+  -o "dhcp_server_ipv4_address_prefix_length = 9.0.0.0/24" -n \
+  -o "dhcp_server_ipv6_address_prefix_length = 2aa1::/8" -n \
+  -n \
+  -o "[switch]" -n \
+  -o "routing_method = switch" -n \
+  -o "relay_mode_enabled = no" -n \
+  -b \
+${OMV_CONFIG_FILE} | xmlstarlet unesc > ${OMV_FREELAN_FREELAN_CONFIG}
+chmod 644 ${OMV_FREELAN_FREELAN_CONFIG}
+ln -sf ${OMV_FREELAN_FREELAN_CONFIG} ${OMV_FREELAN_FREELAN_CONFIG_ALIAS}
+  
+xmlstarlet sel -t \
+  -o "# This is the configuration file for /etc/init.d/freelan" -n \
+  -n \
+  -o "# Configuration files to load." -n \
+  -o "#" -n \
+  -o "# Values should be separated by spaces." -n \
+  -o "# Each entry must match a file at /etc/freelan/<entry>.conf" -n \
+  -o "#" -n \
+  -o "# CONFIGURATIONS=" -n \
+  -m "//services/freelan[enable='1']" \
+    -o "CONFIGURATIONS=freelan > /dev/null 2>&1" -n \
+  -b \
+  -n \
+  -o "# Additional options that are passed to the Daemon." -n \
+  -o "#" -n \
+  -o "#DAEMON_OPTS=\"\"" -n \  
+${OMV_CONFIG_FILE} | xmlstarlet unesc > ${OMV_FREELAN_FREELAN_DEFAULT}
+chmod 644 ${OMV_FREELAN_FREELAN_DEFAULT}
+
+
+
