@@ -36,9 +36,9 @@ xmlstarlet sel -t -m "//services/freelan" \
   -o "[server]" -n \
   -o "enabled = yes" -n \
   -v "concat('host = ', server)" -n \
-  -v "concat('username = \"', username, '\"')" -n \
-  -v "concat('password = \"', password, '\"')" -n \
-  -v "concat('network = \"', network, '\"')" -n \
+  -v "concat('username = ', username)" -n \
+  -v "concat('password = ', password)" -n \
+  -v "concat('network = ', network)" -n \
   -v "concat('public_endpoint = ', endpoint)" -n \
   -o "protocol = https" -n \
   -o "disable_peer_verification = no" -n \
