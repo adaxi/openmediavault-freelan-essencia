@@ -35,7 +35,7 @@ case "$1" in
 		#   <services>
 		#     <freelan>
 		#       <enable>0</enable>
-		#       <server>www.ovh.com</server>
+		#       <server>your.freelan.configuration.server.com</server>
 		#       <network>haecht.adaxisoft.be</network>
 		#       <username></username>
 		#       <password></password>
