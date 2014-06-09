@@ -86,7 +86,7 @@ Ext.define("OMV.module.admin.service.freelan.Settings", {
 				allowBlank: false,
 				plugins: [{
 					ptype: "fieldinfo",
-					text: _("Specifies the hostname or IP where this machine is recheable by the other peers.")
+					text: _("Specifies IP of the interface to bind on. Use '0.0.0.0' to bind all interfaces.")
 				}]
 			}]
 		}];

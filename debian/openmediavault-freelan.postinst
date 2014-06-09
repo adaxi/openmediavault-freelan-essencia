@@ -51,7 +51,7 @@ case "$1" in
 			object="${object}<network></network>"
 			object="${object}<username></username>"
 			object="${object}<password></password>"
-			object="${object}<endpoint></endpoint>"
+			object="${object}<endpoint>0.0.0.0</endpoint>"
 			omv_config_add_element "/config/services" "freelan" "${object}" true
 		fi
 
