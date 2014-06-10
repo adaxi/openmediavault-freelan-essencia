@@ -1,4 +1,4 @@
-Source: openmediavault-freelan
+Source: openmediavault-freelan-essencia
 Section: net
 Priority: optional
 Maintainer: Gerik Bonaert <dev@adaxisoft.be>
@@ -6,7 +6,7 @@ Build-Depends: debhelper (>> 7), gettext
 Standards-Version: 3.6.10
 Homepage: http://adaxisoft.be
 
-Package: openmediavault-freelan
+Package: openmediavault-freelan-essencia
 Architecture: all
 Depends: openmediavault (>= 0.5.7), freelan
 Priority: optional
